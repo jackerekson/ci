@@ -104,17 +104,18 @@
 #           requires:
 #             - one
 
-orbs: # declare what orbs we are going to use
-  node: circleci/node@2.0.2 # the node orb provides common node-related configuration
 
 version: 2.1 # using 2.1 provides access to orbs and other features
+orbs: # declare what orbs we are going to use
+  node: circleci/node@4.7.0 # the node orb provides common node-related configuration
 jobs:
   test:
-    docker:
-      - image: cimg/node:16.8.0
+    executor:
+      name: node/default
+      tag: "13.14"
     steps:
       - checkout
-      - run: node/test.js
+      - node/install-packages
       - run:
           command: npm run test
 workflows:
